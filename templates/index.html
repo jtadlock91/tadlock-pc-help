@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tadlock PC Help</title>
+</head>
+<body>
+  <h1>Tadlock PC Help</h1>
+  {% for service in services %}
+  <div class="card">
+    <h2>{{ service.name }}</h2>
+    <p>{{ service.price }}</p>
+  </div>
+  {% endfor %}
+  <p>Call or text: {{ phone }}</p>
+</body>
+</html>

@@ -17,6 +17,7 @@ axum = "0.8"
 #   macros          — #[tokio::main]
 #   net             — tokio::net::TcpListener (async sockets)
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
+askama = "0.14"
 
 [profile.release]
 # Small-binary settings — not required, but cheap and in the spirit of
