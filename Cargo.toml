@@ -1,0 +1,26 @@
+[package]
+name = "tadlock-pc-help"
+version = "0.1.0"
+edition = "2021"
+description = "pcrepair.tadlockfamily.net rebuilt in Rust (learning project)"
+
+[dependencies]
+# axum: the web framework. Thin layer over hyper (the HTTP implementation)
+# and tower (the middleware/service abstraction). We interact with axum;
+# it delegates the hard parts downward.
+axum = "0.8"
+
+# tokio: the async runtime. Rust ships async *syntax* but no runtime —
+# something has to actually poll futures and drive the event loop.
+# Explicit features instead of "full" so we know exactly what we depend on:
+#   rt-multi-thread — the work-stealing multi-threaded executor
+#   macros          — #[tokio::main]
+#   net             — tokio::net::TcpListener (async sockets)
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
+
+[profile.release]
+# Small-binary settings — not required, but cheap and in the spirit of
+# a site currently served by nginx:alpine.
+strip = true        # remove debug symbols from the binary
+lto = true          # link-time optimization across crate boundaries
+codegen-units = 1   # slower compile, better optimization
