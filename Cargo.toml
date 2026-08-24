@@ -12,7 +12,7 @@ axum = "0.8"
 
 # tokio: the async runtime. Rust ships async *syntax* but no runtime —
 # something has to actually poll futures and drive the event loop.
-tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "signal"] }
 
 # askama: compile-time HTML templates.
 askama = "0.14"

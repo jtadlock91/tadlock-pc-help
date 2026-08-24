@@ -1,4 +1,4 @@
-//! Tadlock PC Help — request logging via tracing, tuned to INFO level.
+//! Tadlock PC Help — logging at INFO, plus graceful shutdown on SIGINT/SIGTERM.
 
 use askama::Template;
 use axum::{http::StatusCode, response::Html, routing::get, Router};
@@ -37,12 +37,6 @@ async fn main() {
         .route("/", get(home))
         .layer(
             TraceLayer::new_for_http()
-                // TraceLayer's defaults are DEBUG — invisible under our
-                // "info" filter. Bumping both the span (request start,
-                // carries method/path) and the response event (status,
-                // latency) to INFO makes them show up without needing
-                // RUST_LOG=debug, which would also flood the output with
-                // every dependency's internal debug noise.
                 .make_span_with(DefaultMakeSpan::new().level(Level::INFO))
                 .on_response(DefaultOnResponse::new().level(Level::INFO)),
         );
@@ -53,9 +47,52 @@ async fn main() {
 
     tracing::info!(addr = %listener.local_addr().unwrap(), "listening");
 
+    // with_graceful_shutdown takes a future; axum::serve keeps running
+    // normally until that future resolves, then it stops accepting new
+    // connections and waits for in-flight requests to finish before
+    // returning. shutdown_signal() below is that future.
     axum::serve(listener, app)
+        .with_graceful_shutdown(shutdown_signal())
         .await
         .expect("server error");
+
+    tracing::info!("shutdown complete");
+}
+
+// Waits for either Ctrl+C (SIGINT — what you send in a terminal) or
+// SIGTERM (what `docker stop` sends). tokio::select! races both futures
+// and returns as soon as WHICHEVER one finishes first, dropping the
+// other — the core "wait for whichever event happens first" pattern in
+// async Rust.
+//
+// SIGTERM handling is Unix-specific, hence #[cfg(unix)] — a compile-time
+// switch that includes or excludes code based on target OS. Since this
+// only ever runs on Linux (dev machine, eventual Docker image), the
+// #[cfg(not(unix))] branch never actually compiles for you — it's here
+// because it's the standard, portable version of this recipe, not
+// because you need portability today.
+async fn shutdown_signal() {
+    let ctrl_c = async {
+        tokio::signal::ctrl_c()
+            .await
+            .expect("failed to install Ctrl+C handler");
+    };
+
+    #[cfg(unix)]
+    let terminate = async {
+        tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+            .expect("failed to install SIGTERM handler")
+            .recv()
+            .await;
+    };
+
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
+    tokio::select! {
+        _ = ctrl_c => tracing::info!("received Ctrl+C, shutting down"),
+        _ = terminate => tracing::info!("received SIGTERM, shutting down"),
+    }
 }
 
 async fn home() -> Result<Html<String>, StatusCode> {
