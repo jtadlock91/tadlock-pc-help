@@ -12,16 +12,23 @@ axum = "0.8"
 
 # tokio: the async runtime. Rust ships async *syntax* but no runtime —
 # something has to actually poll futures and drive the event loop.
-# Explicit features instead of "full" so we know exactly what we depend on:
-#   rt-multi-thread — the work-stealing multi-threaded executor
-#   macros          — #[tokio::main]
-#   net             — tokio::net::TcpListener (async sockets)
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
+
+# askama: compile-time HTML templates.
 askama = "0.14"
 
+# tracing: structured, leveled logging. Unlike println!, output carries a
+# level (info/warn/error/debug) and timestamps, and verbosity is
+# controllable at runtime via the RUST_LOG env var — no recompile needed.
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# tower-http's TraceLayer: middleware that logs every request automatically
+# (method, path, status, latency) by wrapping the whole router — the
+# handler itself never has to know logging exists.
+tower-http = { version = "0.6", features = ["trace"] }
+
 [profile.release]
-# Small-binary settings — not required, but cheap and in the spirit of
-# a site currently served by nginx:alpine.
-strip = true        # remove debug symbols from the binary
-lto = true          # link-time optimization across crate boundaries
-codegen-units = 1   # slower compile, better optimization
+strip = true
+lto = true
+codegen-units = 1

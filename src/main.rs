@@ -1,7 +1,10 @@
-//! Tadlock PC Help — real site content, services and FAQ modeled as data.
+//! Tadlock PC Help — request logging via tracing, tuned to INFO level.
 
 use askama::Template;
 use axum::{http::StatusCode, response::Html, routing::get, Router};
+use tower_http::trace::{DefaultMakeSpan, DefaultOnResponse, TraceLayer};
+use tracing::Level;
+use tracing_subscriber::EnvFilter;
 
 struct Service {
     name: &'static str,
@@ -26,13 +29,29 @@ struct IndexTemplate {
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new().route("/", get(home));
+    tracing_subscriber::fmt()
+        .with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")))
+        .init();
+
+    let app = Router::new()
+        .route("/", get(home))
+        .layer(
+            TraceLayer::new_for_http()
+                // TraceLayer's defaults are DEBUG — invisible under our
+                // "info" filter. Bumping both the span (request start,
+                // carries method/path) and the response event (status,
+                // latency) to INFO makes them show up without needing
+                // RUST_LOG=debug, which would also flood the output with
+                // every dependency's internal debug noise.
+                .make_span_with(DefaultMakeSpan::new().level(Level::INFO))
+                .on_response(DefaultOnResponse::new().level(Level::INFO)),
+        );
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080")
         .await
         .expect("failed to bind 0.0.0.0:8080 — is something already on that port?");
 
-    println!("listening on http://{}", listener.local_addr().unwrap());
+    tracing::info!(addr = %listener.local_addr().unwrap(), "listening");
 
     axum::serve(listener, app)
         .await
