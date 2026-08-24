@@ -1,17 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tadlock PC Help</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tadlock PC Help — Flat-Rate Computer Builds & Repair in Kearny, AZ</title>
+<meta name="description" content="Tadlock PC Help — custom PC builds, repairs, upgrades, and tech help in Kearny, Superior, Hayden-Winkelman, and Globe-Miami, Arizona. Flat prices, no surprises.">
+<meta property="og:title" content="Tadlock PC Help — Flat-Rate PC Builds & Repair in Kearny, AZ">
+<meta property="og:description" content="Custom builds $125 · Upgrades & repairs $40–60 · Tune-ups $40. Straight answers, flat prices, house calls across the Copper Basin. Call/text (509) 994-0005.">
+<meta property="og:url" content="https://pcrepair.tadlockfamily.net">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1.5' y='1.5' width='23' height='23' rx='3' fill='%23FAF8F5' stroke='%23B4632C' stroke-width='2'/%3E%3Cpath d='M7 13h4l2-4 2 8 2-4h2' stroke='%231E1B17' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF8F5;
+    --ink: #1E1B17;
+    --copper: #B4632C;
+    --copper-deep: #8C4A1F;
+    --trace: #E4DCD2;
+    --slate: #5C564E;
+    --card: #FFFFFF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Barlow', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  header {
+    border-bottom: 1px solid var(--trace);
+    background: var(--paper);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0;
+  }
+  .logo {
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--ink);
+  }
+  .logo svg { display: block; }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem; color: var(--slate);
+    text-decoration: none; margin-left: 20px;
+  }
+  nav a:hover, nav a:focus-visible { color: var(--copper-deep); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--copper); outline-offset: 3px; border-radius: 2px;
+  }
+  @media (max-width: 560px) { nav { display: none; } }
+  .hero { padding: 72px 0 56px; position: relative; overflow: hidden; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.08em;
+    color: var(--copper-deep); text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5.5vw, 3.3rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 17ch;
+    margin-bottom: 22px;
+  }
+  h1 em { font-style: normal; color: var(--copper); }
+  .hero p.lede {
+    max-width: 54ch; color: var(--slate); font-size: 1.08rem;
+    margin-bottom: 32px;
+  }
+  .btn {
+    display: inline-block;
+    font-family: 'Chakra Petch', sans-serif; font-weight: 600;
+    font-size: 1rem; letter-spacing: 0.02em;
+    background: var(--copper); color: #fff;
+    padding: 14px 28px; border-radius: 4px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--copper-deep); }
+  .btn-quiet {
+    display: inline-block; margin-left: 14px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem;
+    color: var(--copper-deep); text-decoration: none;
+    border-bottom: 1px solid var(--copper);
+    padding-bottom: 2px;
+  }
+  .trace-divider { display: block; width: 100%; height: 56px; }
+  section { padding: 56px 0; scroll-margin-top: 70px; }
+  .float-text {
+    display: none;
+    position: fixed; bottom: 18px; right: 18px; z-index: 50;
+    background: var(--copper); color: #fff;
+    font-family: 'Chakra Petch', sans-serif; font-weight: 600; font-size: 0.95rem;
+    padding: 14px 22px; border-radius: 99px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(30,27,23,0.25);
+  }
+  .float-text:active { background: var(--copper-deep); }
+  .header-text-btn {
+    display: none;
+    font-family: 'Chakra Petch', sans-serif; font-weight: 600; font-size: 0.85rem;
+    background: var(--copper); color: #fff;
+    padding: 8px 16px; border-radius: 99px; text-decoration: none;
+  }
+  @media (max-width: 560px) {
+    .float-text { display: inline-block; }
+    .header-text-btn { display: inline-block; }
+  }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--copper-deep);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 28px;
+  }
+  .section-label::after {
+    content: ""; flex: 1; height: 1px; background: var(--trace);
+  }
+  h2 {
+    font-family: 'Chakra Petch', sans-serif; font-weight: 700;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    margin-bottom: 14px;
+  }
+  .svc-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px; margin-top: 8px;
+  }
+  .svc {
+    background: var(--card);
+    border: 1px solid var(--trace);
+    border-radius: 6px;
+    padding: 24px 22px 20px;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .svc::before {
+    content: ""; position: absolute; top: 0; left: 22px; right: auto;
+    width: 42px; height: 3px; background: var(--copper); border-radius: 0 0 3px 3px;
+  }
+  .svc h3 {
+    font-family: 'Chakra Petch', sans-serif; font-weight: 600;
+    font-size: 1.05rem; margin-bottom: 8px;
+  }
+  .svc p { color: var(--slate); font-size: 0.95rem; flex: 1; }
+  .price {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.15rem; font-weight: 500; color: var(--copper-deep);
+    margin-top: 16px;
+  }
+  .price span { font-size: 0.72rem; color: var(--slate); display: block; font-weight: 400; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .step { border-left: 2px solid var(--copper); padding-left: 18px; }
+  .step h3 { font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+  .step p { color: var(--slate); font-size: 0.95rem; }
+  .area-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem;
+    border: 1px solid var(--trace); background: var(--card);
+    padding: 7px 14px; border-radius: 99px; color: var(--ink);
+  }
+  .tag.home { border-color: var(--copper); color: var(--copper-deep); }
+  .about-card {
+    display: flex; gap: 24px; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--trace);
+    border-radius: 8px; padding: 28px;
+  }
+  .about-card .avatar {
+    flex: 0 0 64px; width: 64px; height: 64px; border-radius: 50%;
+    background: var(--copper); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 1.5rem;
+  }
+  .about-card p { color: var(--slate); max-width: 62ch; }
+  .about-card p + p { margin-top: 10px; }
+  @media (max-width: 560px) { .about-card { flex-direction: column; } }
+  .faq details {
+    border: 1px solid var(--trace); border-radius: 6px;
+    background: var(--card); margin-bottom: 10px;
+  }
+  .faq summary {
+    font-family: 'Chakra Petch', sans-serif; font-weight: 600;
+    padding: 16px 20px; cursor: pointer; list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+"; font-family: 'IBM Plex Mono', monospace;
+    color: var(--copper); font-size: 1.2rem;
+  }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p {
+    padding: 0 20px 18px; color: var(--slate); font-size: 0.96rem;
+  }
+  .promise {
+    background: var(--ink); color: var(--paper);
+    border-radius: 8px; padding: 36px 32px;
+  }
+  .promise h2 { color: #fff; }
+  .promise p { color: #C9C2B8; max-width: 60ch; }
+  .promise .mono { color: var(--copper); }
+  .contact { text-align: left; }
+  .contact-card {
+    background: var(--card); border: 1px solid var(--trace); border-radius: 8px;
+    padding: 32px; display: flex; flex-wrap: wrap; gap: 28px; align-items: center;
+    justify-content: space-between;
+  }
+  .contact-card .lines p { margin-bottom: 4px; }
+  .contact-card .lines .mono { color: var(--copper-deep); font-size: 0.95rem; }
+  footer {
+    border-top: 1px solid var(--trace);
+    padding: 26px 0 40px;
+    color: var(--slate); font-size: 0.85rem;
+  }
+  footer .mono { font-size: 0.75rem; }
+</style>
 </head>
 <body>
-  <h1>Tadlock PC Help</h1>
-  {% for service in services %}
-  <div class="card">
-    <h2>{{ service.name }}</h2>
-    <p>{{ service.price }}</p>
+<header>
+  <div class="wrap header-inner">
+    <a class="logo" href="#top" aria-label="Tadlock PC Help home">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="23" height="23" rx="3" stroke="#B4632C" stroke-width="2"/>
+        <path d="M7 13h4l2-4 2 8 2-4h2" stroke="#1E1B17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      TADLOCK PC HELP
+    </a>
+    <nav aria-label="Sections">
+      <a href="#services">services</a>
+      <a href="#about">about</a>
+      <a href="#faq">faq</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <a class="header-text-btn" href="sms:{{ phone_link }}">Text me</a>
   </div>
-  {% endfor %}
-  <p>Call or text: {{ phone }}</p>
+</header>
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Kearny, Arizona · builds · repairs · tech help</p>
+      <h1>Flat-rate computer help, right here in <em>Copper Country</em>.</h1>
+      <p class="lede">No hauling your computer to the Valley. No hourly meter running. I'm John — a local builder who fixes machines, builds new ones, and tells you straight when something isn't worth fixing.</p>
+      <a class="btn" href="#contact">Get a flat-rate quote</a>
+      <a class="btn-quiet" href="#services">See prices ↓</a>
+    </div>
+  </div>
+  <svg class="trace-divider" viewBox="0 0 960 56" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 28 H180 L210 10 H340 L370 28 H520 L550 46 H700 L730 28 H960" stroke="#B4632C" stroke-width="1.6" fill="none" opacity="0.55"/>
+    <circle cx="180" cy="28" r="3.5" fill="#B4632C"/>
+    <circle cx="370" cy="28" r="3.5" fill="#B4632C"/>
+    <circle cx="730" cy="28" r="3.5" fill="#B4632C"/>
+  </svg>
+  <section id="services">
+    <div class="wrap">
+      <h2>You'll know the price before I touch a screw.</h2>
+      <div class="svc-grid">
+        {% for service in services %}
+        <div class="svc">
+          <h3>{{ service.name }}</h3>
+          <p>{{ service.description }}</p>
+          <p class="price">{{ service.price }} <span>{{ service.price_note }}</span></p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <section id="how">
+    <div class="wrap">
+      <h2 style="margin-bottom: 28px;">How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Message me</h3>
+          <p>Tell me what's going on with your machine — or what you want built. Photos help.</p>
+        </div>
+        <div class="step">
+          <h3>Get a flat quote</h3>
+          <p>I'll tell you the price and an honest opinion, even if the answer is "don't spend money on this."</p>
+        </div>
+        <div class="step">
+          <h3>Drop off or house call</h3>
+          <p>Drop-off in Kearny, or I'll come to you. You approve everything before work starts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="about">
+    <div class="wrap">
+      <div class="about-card">
+        <div class="avatar" aria-hidden="true">JT</div>
+        <div>
+          <h2>Hi, I'm John.</h2>
+          <p>I live right here in Kearny with my family, and I've been building, upgrading, and reviving PCs for years — my own, my kids', and half the machines my friends and family own. I'm a dad first, so I know exactly what's really on these computers: the school projects, the family photos, the stuff you can't replace. Keeping all of that safe and running is something I already do every day at home — doing it for my neighbors just comes naturally.</p>
+          <p>I started Tadlock PC Help because folks out here shouldn't have to drive to the Valley and pay city prices for honest computer work. When I'm not fixing computers, I'm running the home server that stores our family's photos and movies — it's also serving the page you're reading right now. I work a regular job during the week, so most repairs happen evenings and weekends — which also means I treat every machine like my reputation depends on it, because in a town this size, it does.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="area">
+    <div class="wrap">
+      <h2>Copper Basin and up the hill.</h2>
+      <p style="color:var(--slate); max-width:58ch;">Based in Kearny. House calls available across the Basin and surrounding towns for a small trip fee. Not local? Mail-in repair is available anywhere in the US — message me first and I'll walk you through safe packing.</p>
+      <div class="area-tags">
+        <span class="tag home">Kearny — home base</span>
+        <span class="tag">Hayden</span>
+        <span class="tag">Winkelman</span>
+        <span class="tag">Superior</span>
+        <span class="tag">Globe–Miami</span>
+        <span class="tag">Dudleyville</span>
+        <span class="tag">Mammoth</span>
+      </div>
+    </div>
+  </section>
+  <section id="faq" class="faq">
+    <div class="wrap">
+      <h2 style="margin-bottom: 24px;">Common questions</h2>
+      {% for item in faqs %}
+      <details>
+        <summary>{{ item.question }}</summary>
+        <p>{{ item.answer|safe }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </section>
+  <section>
+    <div class="wrap">
+      <div class="promise">
+        <h2>The straight-answer promise</h2>
+        <p>If your machine isn't worth fixing, I'll say so and you'll pay nothing for the opinion. If a cheap part solves it, I won't sell you an expensive one. <span class="mono">Small town. Long memory. I plan on keeping my reputation.</span></p>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="contact-card">
+        <div class="lines">
+          <h2>Tell me what's broken (or what to build).</h2>
+          <p class="mono">call/text: <a href="tel:{{ phone_link }}" style="color:var(--copper-deep);">{{ phone_display }}</a></p>
+          <p class="mono">facebook: Tadlock PC Help</p>
+          <p class="mono">web: pcrepair.tadlockfamily.net</p>
+          <p style="color:var(--slate); font-size:0.9rem; margin-top:10px;">Texts usually answered same evening · Cash · Venmo · Zelle · Cash App</p>
+        </div>
+        <a class="btn" href="sms:{{ phone_link }}">Text me now</a>
+      </div>
+    </div>
+  </section>
+</main>
+<a class="float-text" href="sms:{{ phone_link }}">📱 Text me</a>
+<footer>
+  <div class="wrap">
+    <p>Tadlock PC Help · Kearny, Arizona · <a href="tel:{{ phone_link }}" style="color:var(--copper-deep); text-decoration:none;">{{ phone_display }}</a></p>
+    <p class="mono" style="margin-top:6px;">Built by a guy who labels both ends of every cable. This website is served from a home server I built and maintain myself.</p>
+  </div>
+</footer>
+<script data-goatcounter="https://tadlockpchelp.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
