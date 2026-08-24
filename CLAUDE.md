@@ -63,11 +63,12 @@ tags for Facebook link previews.
 ## Roadmap (one lesson per step)
 
 - [x] v0: axum serves embedded placeholder HTML on GET /
-- [ ] Real page content (port the actual site HTML/CSS)
-- [ ] Templating with askama (compile-time templates → data lives in Rust
-      structs, e.g. services as a Vec<Service> rendered into cards)
-- [ ] Static assets (CSS/images) — ServeDir vs embedding, decide then
 - [ ] Logging with tracing (see requests happen)
 - [ ] Graceful shutdown (SIGTERM handling so `docker stop` is clean)
 - [ ] Dockerfile (multi-stage: cargo build → scratch/distroless image)
 - [ ] Deploy behind the existing Cloudflare Tunnel
+
+## Update — real content pass (Aug 2026)
+- Services and FAQ ported as `Vec<Service>` / `Vec<Faq>` structs rendered via askama; rest of the page (hero, about, promise, contact, area tags, steps) stayed as static HTML in the template — no benefit to modeling one-off content as structs.
+- `Faq.answer` uses `{{ item.answer|safe }}` since two answers embed a real `<a href="tel:...">` link; safe only because the content is hardcoded by the site owner, never visitor input.
+- Static assets: real site has none locally (fonts/icon/analytics are CDN or inline) — the embed-vs-ServeDir decision is moot until a real local asset (e.g. a logo image) gets added.
